@@ -1,0 +1,50 @@
+{
+  "service": "checkout-api",
+  "base_time": "2026-09-05T09:00:00",
+  "incident_start": "2026-09-05T09:18:00",
+  "severity": "HIGH",
+  "description": "External payment gateway dependency latency causing checkout failures",
+  "trigger_metrics": {
+    "error_rate":           {"before": 0.3, "during": 7.2},
+    "latency_p95":          {"before": 200, "during": 8500},
+    "dependency_latency":   {"before": 80,  "during": 7200}
+  },
+  "deployments": [],
+  "metrics": [
+    {"timestamp": "2026-09-05T09:00:00", "metric_name": "error_rate",          "value": 0.3, "unit": "percent"},
+    {"timestamp": "2026-09-05T09:05:00", "metric_name": "error_rate",          "value": 0.3, "unit": "percent"},
+    {"timestamp": "2026-09-05T09:10:00", "metric_name": "error_rate",          "value": 0.4, "unit": "percent"},
+    {"timestamp": "2026-09-05T09:18:00", "metric_name": "error_rate",          "value": 3.1, "unit": "percent"},
+    {"timestamp": "2026-09-05T09:19:00", "metric_name": "error_rate",          "value": 7.2, "unit": "percent"},
+    {"timestamp": "2026-09-05T09:20:00", "metric_name": "error_rate",          "value": 8.0, "unit": "percent"},
+
+    {"timestamp": "2026-09-05T09:00:00", "metric_name": "latency_p95",         "value": 200, "unit": "ms"},
+    {"timestamp": "2026-09-05T09:10:00", "metric_name": "latency_p95",         "value": 210, "unit": "ms"},
+    {"timestamp": "2026-09-05T09:18:00", "metric_name": "latency_p95",         "value": 3200,"unit": "ms"},
+    {"timestamp": "2026-09-05T09:19:00", "metric_name": "latency_p95",         "value": 8500,"unit": "ms"},
+    {"timestamp": "2026-09-05T09:20:00", "metric_name": "latency_p95",         "value": 9100,"unit": "ms"},
+
+    {"timestamp": "2026-09-05T09:00:00", "metric_name": "dependency_latency",  "value": 80,  "unit": "ms"},
+    {"timestamp": "2026-09-05T09:10:00", "metric_name": "dependency_latency",  "value": 82,  "unit": "ms"},
+    {"timestamp": "2026-09-05T09:18:00", "metric_name": "dependency_latency",  "value": 3500,"unit": "ms"},
+    {"timestamp": "2026-09-05T09:19:00", "metric_name": "dependency_latency",  "value": 7200,"unit": "ms"},
+    {"timestamp": "2026-09-05T09:20:00", "metric_name": "dependency_latency",  "value": 9000,"unit": "ms"},
+
+    {"timestamp": "2026-09-05T09:00:00", "metric_name": "cpu_usage",           "value": 20,  "unit": "percent"},
+    {"timestamp": "2026-09-05T09:18:00", "metric_name": "cpu_usage",           "value": 22,  "unit": "percent"},
+    {"timestamp": "2026-09-05T09:20:00", "metric_name": "cpu_usage",           "value": 21,  "unit": "percent"},
+
+    {"timestamp": "2026-09-05T09:00:00", "metric_name": "db_connections",      "value": 30,  "unit": "count"},
+    {"timestamp": "2026-09-05T09:18:00", "metric_name": "db_connections",      "value": 32,  "unit": "count"},
+    {"timestamp": "2026-09-05T09:20:00", "metric_name": "db_connections",      "value": 31,  "unit": "count"}
+  ],
+  "logs": [
+    {"timestamp": "2026-09-05T09:18:05", "level": "WARN",  "message": "payment-gateway response time: 3200ms (threshold: 1000ms)"},
+    {"timestamp": "2026-09-05T09:18:20", "level": "ERROR", "message": "payment-gateway request timeout after 8000ms"},
+    {"timestamp": "2026-09-05T09:18:35", "level": "ERROR", "message": "payment-gateway request timeout after 8000ms"},
+    {"timestamp": "2026-09-05T09:19:00", "level": "ERROR", "message": "checkout failed: payment-gateway unavailable"},
+    {"timestamp": "2026-09-05T09:19:15", "level": "WARN",  "message": "circuit breaker entering HALF_OPEN state for payment-gateway"},
+    {"timestamp": "2026-09-05T09:19:30", "level": "ERROR", "message": "circuit breaker OPEN: payment-gateway"},
+    {"timestamp": "2026-09-05T09:20:00", "level": "ERROR", "message": "all checkout requests failing: dependency payment-gateway is unreachable"}
+  ]
+}

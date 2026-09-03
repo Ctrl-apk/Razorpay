@@ -1,0 +1,44 @@
+{
+  "service": "orders-api",
+  "base_time": "2026-09-03T14:00:00",
+  "incident_start": "2026-09-03T14:22:00",
+  "severity": "CRITICAL",
+  "description": "Database failure causing API errors — no recent deployment",
+  "trigger_metrics": {
+    "error_rate": {"before": 0.2, "during": 12.5},
+    "latency_p95": {"before": 95, "during": 5200},
+    "db_connections": {"before": 35, "during": 0}
+  },
+  "deployments": [],
+  "metrics": [
+    {"timestamp": "2026-09-03T14:00:00", "metric_name": "error_rate",    "value": 0.2, "unit": "percent"},
+    {"timestamp": "2026-09-03T14:05:00", "metric_name": "error_rate",    "value": 0.2, "unit": "percent"},
+    {"timestamp": "2026-09-03T14:10:00", "metric_name": "error_rate",    "value": 0.3, "unit": "percent"},
+    {"timestamp": "2026-09-03T14:15:00", "metric_name": "error_rate",    "value": 0.2, "unit": "percent"},
+    {"timestamp": "2026-09-03T14:22:00", "metric_name": "error_rate",    "value": 6.1, "unit": "percent"},
+    {"timestamp": "2026-09-03T14:23:00", "metric_name": "error_rate",    "value": 12.5,"unit": "percent"},
+    {"timestamp": "2026-09-03T14:24:00", "metric_name": "error_rate",    "value": 14.2,"unit": "percent"},
+
+    {"timestamp": "2026-09-03T14:00:00", "metric_name": "latency_p95",   "value": 95,  "unit": "ms"},
+    {"timestamp": "2026-09-03T14:10:00", "metric_name": "latency_p95",   "value": 98,  "unit": "ms"},
+    {"timestamp": "2026-09-03T14:22:00", "metric_name": "latency_p95",   "value": 2200,"unit": "ms"},
+    {"timestamp": "2026-09-03T14:23:00", "metric_name": "latency_p95",   "value": 5200,"unit": "ms"},
+
+    {"timestamp": "2026-09-03T14:00:00", "metric_name": "db_connections","value": 35,  "unit": "count"},
+    {"timestamp": "2026-09-03T14:10:00", "metric_name": "db_connections","value": 34,  "unit": "count"},
+    {"timestamp": "2026-09-03T14:22:00", "metric_name": "db_connections","value": 10,  "unit": "count"},
+    {"timestamp": "2026-09-03T14:23:00", "metric_name": "db_connections","value": 0,   "unit": "count"},
+
+    {"timestamp": "2026-09-03T14:00:00", "metric_name": "cpu_usage",     "value": 18,  "unit": "percent"},
+    {"timestamp": "2026-09-03T14:22:00", "metric_name": "cpu_usage",     "value": 19,  "unit": "percent"},
+    {"timestamp": "2026-09-03T14:23:00", "metric_name": "cpu_usage",     "value": 17,  "unit": "percent"}
+  ],
+  "logs": [
+    {"timestamp": "2026-09-03T14:22:10", "level": "ERROR", "message": "database connection refused: connection to server on socket failed"},
+    {"timestamp": "2026-09-03T14:22:15", "level": "ERROR", "message": "database connection refused: connection to server on socket failed"},
+    {"timestamp": "2026-09-03T14:22:30", "level": "ERROR", "message": "health check failed: database unreachable"},
+    {"timestamp": "2026-09-03T14:22:45", "level": "ERROR", "message": "query execution failed: no database connection available"},
+    {"timestamp": "2026-09-03T14:23:00", "level": "ERROR", "message": "circuit breaker OPEN: database"},
+    {"timestamp": "2026-09-03T14:23:30", "level": "WARN",  "message": "falling back to read-only cache for orders"}
+  ]
+}

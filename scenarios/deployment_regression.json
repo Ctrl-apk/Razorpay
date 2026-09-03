@@ -1,0 +1,61 @@
+{
+  "service": "payments-api",
+  "base_time": "2026-09-02T02:00:00",
+  "incident_start": "2026-09-02T02:09:00",
+  "severity": "HIGH",
+  "description": "API error rate spiked after deployment v2.8.1",
+  "trigger_metrics": {
+    "error_rate": {"before": 0.4, "during": 8.7},
+    "latency_p95": {"before": 180, "during": 920},
+    "db_connections": {"before": 42, "during": 98}
+  },
+  "deployments": [
+    {
+      "timestamp": "2026-09-02T02:07:00",
+      "version": "v2.8.1",
+      "commit_sha": "abc123def456",
+      "author": "alice@company.com",
+      "environment": "production",
+      "status": "success"
+    }
+  ],
+  "metrics": [
+    {"timestamp": "2026-09-02T02:00:00", "metric_name": "error_rate",    "value": 0.3, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:01:00", "metric_name": "error_rate",    "value": 0.4, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:02:00", "metric_name": "error_rate",    "value": 0.4, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:03:00", "metric_name": "error_rate",    "value": 0.5, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:04:00", "metric_name": "error_rate",    "value": 0.4, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:05:00", "metric_name": "error_rate",    "value": 0.3, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:09:00", "metric_name": "error_rate",    "value": 4.2, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:10:00", "metric_name": "error_rate",    "value": 8.7, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:11:00", "metric_name": "error_rate",    "value": 9.1, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:12:00", "metric_name": "error_rate",    "value": 8.4, "unit": "percent"},
+
+    {"timestamp": "2026-09-02T02:00:00", "metric_name": "latency_p95",   "value": 175, "unit": "ms"},
+    {"timestamp": "2026-09-02T02:01:00", "metric_name": "latency_p95",   "value": 180, "unit": "ms"},
+    {"timestamp": "2026-09-02T02:02:00", "metric_name": "latency_p95",   "value": 182, "unit": "ms"},
+    {"timestamp": "2026-09-02T02:09:00", "metric_name": "latency_p95",   "value": 450, "unit": "ms"},
+    {"timestamp": "2026-09-02T02:10:00", "metric_name": "latency_p95",   "value": 920, "unit": "ms"},
+    {"timestamp": "2026-09-02T02:11:00", "metric_name": "latency_p95",   "value": 980, "unit": "ms"},
+
+    {"timestamp": "2026-09-02T02:00:00", "metric_name": "db_connections","value": 40, "unit": "count"},
+    {"timestamp": "2026-09-02T02:02:00", "metric_name": "db_connections","value": 42, "unit": "count"},
+    {"timestamp": "2026-09-02T02:09:00", "metric_name": "db_connections","value": 71, "unit": "count"},
+    {"timestamp": "2026-09-02T02:10:00", "metric_name": "db_connections","value": 98, "unit": "count"},
+    {"timestamp": "2026-09-02T02:11:00", "metric_name": "db_connections","value": 100,"unit": "count"},
+
+    {"timestamp": "2026-09-02T02:00:00", "metric_name": "cpu_usage",     "value": 22, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:05:00", "metric_name": "cpu_usage",     "value": 24, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:10:00", "metric_name": "cpu_usage",     "value": 26, "unit": "percent"},
+    {"timestamp": "2026-09-02T02:12:00", "metric_name": "cpu_usage",     "value": 25, "unit": "percent"}
+  ],
+  "logs": [
+    {"timestamp": "2026-09-02T02:09:20", "level": "ERROR", "message": "database connection timeout after 5000ms"},
+    {"timestamp": "2026-09-02T02:09:22", "level": "ERROR", "message": "database connection timeout after 5000ms"},
+    {"timestamp": "2026-09-02T02:09:45", "level": "ERROR", "message": "connection pool exhausted: max 100 connections reached"},
+    {"timestamp": "2026-09-02T02:10:01", "level": "ERROR", "message": "failed to acquire connection from pool"},
+    {"timestamp": "2026-09-02T02:10:15", "level": "ERROR", "message": "database connection timeout after 5000ms"},
+    {"timestamp": "2026-09-02T02:10:30", "level": "WARN",  "message": "retrying database connection attempt 2/3"},
+    {"timestamp": "2026-09-02T02:11:00", "level": "ERROR", "message": "max retries exceeded for database connection"}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "service": "storefront-api",
+  "base_time": "2026-09-04T18:00:00",
+  "incident_start": "2026-09-04T18:30:00",
+  "severity": "HIGH",
+  "description": "Sudden traffic spike causing resource saturation",
+  "trigger_metrics": {
+    "error_rate":  {"before": 0.1, "during": 5.3},
+    "latency_p95": {"before": 120, "during": 1800},
+    "cpu_usage":   {"before": 25,  "during": 91}
+  },
+  "deployments": [],
+  "metrics": [
+    {"timestamp": "2026-09-04T18:00:00", "metric_name": "error_rate",    "value": 0.1, "unit": "percent"},
+    {"timestamp": "2026-09-04T18:10:00", "metric_name": "error_rate",    "value": 0.1, "unit": "percent"},
+    {"timestamp": "2026-09-04T18:20:00", "metric_name": "error_rate",    "value": 0.2, "unit": "percent"},
+    {"timestamp": "2026-09-04T18:30:00", "metric_name": "error_rate",    "value": 1.8, "unit": "percent"},
+    {"timestamp": "2026-09-04T18:31:00", "metric_name": "error_rate",    "value": 5.3, "unit": "percent"},
+    {"timestamp": "2026-09-04T18:32:00", "metric_name": "error_rate",    "value": 6.1, "unit": "percent"},
+
+    {"timestamp": "2026-09-04T18:00:00", "metric_name": "latency_p95",   "value": 120, "unit": "ms"},
+    {"timestamp": "2026-09-04T18:10:00", "metric_name": "latency_p95",   "value": 118, "unit": "ms"},
+    {"timestamp": "2026-09-04T18:30:00", "metric_name": "latency_p95",   "value": 650, "unit": "ms"},
+    {"timestamp": "2026-09-04T18:31:00", "metric_name": "latency_p95",   "value": 1800,"unit": "ms"},
+    {"timestamp": "2026-09-04T18:32:00", "metric_name": "latency_p95",   "value": 2100,"unit": "ms"},
+
+    {"timestamp": "2026-09-04T18:00:00", "metric_name": "cpu_usage",     "value": 25,  "unit": "percent"},
+    {"timestamp": "2026-09-04T18:10:00", "metric_name": "cpu_usage",     "value": 27,  "unit": "percent"},
+    {"timestamp": "2026-09-04T18:20:00", "metric_name": "cpu_usage",     "value": 30,  "unit": "percent"},
+    {"timestamp": "2026-09-04T18:30:00", "metric_name": "cpu_usage",     "value": 72,  "unit": "percent"},
+    {"timestamp": "2026-09-04T18:31:00", "metric_name": "cpu_usage",     "value": 91,  "unit": "percent"},
+    {"timestamp": "2026-09-04T18:32:00", "metric_name": "cpu_usage",     "value": 95,  "unit": "percent"},
+
+    {"timestamp": "2026-09-04T18:00:00", "metric_name": "requests_per_second","value": 420, "unit": "rps"},
+    {"timestamp": "2026-09-04T18:10:00", "metric_name": "requests_per_second","value": 435, "unit": "rps"},
+    {"timestamp": "2026-09-04T18:30:00", "metric_name": "requests_per_second","value": 1820,"unit": "rps"},
+    {"timestamp": "2026-09-04T18:31:00", "metric_name": "requests_per_second","value": 2640,"unit": "rps"},
+    {"timestamp": "2026-09-04T18:32:00", "metric_name": "requests_per_second","value": 2890,"unit": "rps"},
+
+    {"timestamp": "2026-09-04T18:00:00", "metric_name": "db_connections","value": 28,  "unit": "count"},
+    {"timestamp": "2026-09-04T18:30:00", "metric_name": "db_connections","value": 55,  "unit": "count"},
+    {"timestamp": "2026-09-04T18:31:00", "metric_name": "db_connections","value": 80,  "unit": "count"}
+  ],
+  "logs": [
+    {"timestamp": "2026-09-04T18:30:30", "level": "WARN",  "message": "high CPU usage detected: 72%"},
+    {"timestamp": "2026-09-04T18:31:00", "level": "ERROR", "message": "request queue depth exceeded threshold: 4200 pending"},
+    {"timestamp": "2026-09-04T18:31:15", "level": "ERROR", "message": "worker thread pool saturated — dropping requests"},
+    {"timestamp": "2026-09-04T18:31:30", "level": "ERROR", "message": "503 Service Unavailable returned to client"},
+    {"timestamp": "2026-09-04T18:32:00", "level": "WARN",  "message": "auto-scaling triggered: adding 2 instances"}
+  ]
+}
